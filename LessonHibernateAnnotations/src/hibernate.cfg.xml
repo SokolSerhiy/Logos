@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!-- Основний файл настройки фреймворка hibernate -->
+<!-- усі параметри обгортаються тегом hibernate-configuration і session-factory -->
+<hibernate-configuration>
+	<session-factory>
+	<!-- параметр клас драйвера, відображає драйвер до БД який буде використаний -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<!-- параметр шлях до БД -->
+		<property name="connection.url">jdbc:mysql://localhost/logos</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">1987</property>
+		<!-- параметр діалект, для використання специфічних можливостей БД -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- параметр в якому вказано що робити з БД після закінчення роботи SessionFactory -->
+		<!-- має 3 можливих параметра: update - найчастіше використовуваний, БД створюється доповнюється і зберігається -->
+		<!-- create - щоразу створюється нова БД -->
+		<!-- create-drop - БД створюється разом з SessionFactory та стерається після закінчення роботи -->
+		<property name="hbm2ddl.auto">update</property>
+		<!-- посилання на файли де описаний маппінг -->
+		<!-- починати читання коментарів з Book -->
+		<!-- прочитати усі файли *hbm.xml -->
+		<!-- тільки після цього читати Dao рівень -->
+		<!-- коли використовуються анотації, в мапінгу шлях вказується до класів з анотаціями -->
+		<mapping class="lv.lgs.hibernate.domain.Book"/>
+		<mapping class="lv.lgs.hibernate.domain.Student"/>
+		<mapping class="lv.lgs.hibernate.domain.Subject"/>
+	</session-factory>
+</hibernate-configuration>
