@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	
+	<!-- This is the main XML file for web project-->
+	
+	<!-- Here is description for servlet  -->
+	<servlet>
+		<servlet-name>MyServlet</servlet-name> <!-- It`s custom name, choose for yourselves-->
+		<servlet-class>ua.lviv.lgs.HelloServlet</servlet-class> <!-- Reference to your own java class -->
+	</servlet>
+	<!-- You can have as many servlets as you need-->
+	<servlet>
+		<servlet-name>ServletS</servlet-name>
+		<servlet-class>ua.lviv.lgs.ServletS</servlet-class>
+	</servlet>
+	
+	<!-- Here is mapping URL for servlet. Thats mean serlvet will react only on this URL`s -->
+	<servlet-mapping>
+		<servlet-name>ServletS</servlet-name>
+		<url-pattern>/qwer/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MyServlet</servlet-name>
+		<url-pattern>/test/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- By default welcome file is index.jsp in the root directory (WebContent) -->
+	<welcome-file-list>
+		<welcome-file>hello.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
