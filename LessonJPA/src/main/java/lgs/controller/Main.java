@@ -1,5 +1,7 @@
 package lgs.controller;
 
+import java.awt.print.Book;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,9 +13,7 @@ public class Main {
 				.createEntityManagerFactory("primary");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
-		//в resources є ще папка, там повинні бути настройки, називаються persistence.xml
-		//тут пробувати зберігати
-		//використовувати методи persist, merge, find, remove
+		em.find(Book.class, 1);
 		em.getTransaction().commit();
 		em.close();
 		factory.close();
