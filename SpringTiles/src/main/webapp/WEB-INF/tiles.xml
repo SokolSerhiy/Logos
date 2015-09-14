@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!-- Description of template web page that will have 3 attributes: header, footer 
+		and main content (body) -->
+	<!-- Опис шаблонної веб сторінки, на якій буде 3 параметри: хедер, футер 
+		і головний контент -->
+	<definition name="base.definition" template="/views/tiles/layout.jsp">
+		<put-attribute name="header" value="/views/tiles/header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/views/tiles/footer.jsp"></put-attribute>
+		<!-- Here body must be empty, values will come in child definitions -->
+		<!-- Задаєм пустим, значення будуть приходити в наступних definition -->
+		<put-attribute name="body" value=""></put-attribute> 
+	</definition>
+	
+	<!-- Definition name it`s a String value, which come here from the controller`s methods -->
+	<!-- Назва definition це стрічка, яка приходить з методів контролера -->
+
+	<!--  Не шаблонний спосіб -->
+	<!-- <definition name="authors" extends="base.definition"> -->
+	<!-- <put-attribute name="body" value="/views/authors.jsp"></put-attribute> -->
+	<!-- <put-attribute name="title" value="All Authors"></put-attribute> -->
+	<!-- </definition> -->
+
+	<!-- <definition name="newAuthor" extends="base.definition"> -->
+	<!-- <put-attribute name="body" value="/views/newAuthor.jsp"></put-attribute> -->
+	<!-- <put-attribute name="title" value="New Author"></put-attribute> -->
+	<!-- </definition> -->
+
+	<!-- Зручніший шаблонний спосіб -->
+	<!-- * = {1} (те, що приходить замість *, записується в {1}, наприклад all 
+		i new -->
+	<definition name="author-*" extends="base.definition">
+		<put-attribute name="body" value="/views/author-{1}.jsp"></put-attribute>
+		<put-attribute name="title" value="Author {1}"></put-attribute>
+	</definition>
+</tiles-definitions>
