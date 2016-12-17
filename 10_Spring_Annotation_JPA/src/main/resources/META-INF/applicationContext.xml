@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+	<!--Включає автоматичний пошук бінів по анотаціям-->
+	<!--і не включає в пошук анотації Spring MVC -->
+	<context:component-scan base-package="ua.*">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!--Включає підтримку асинхронності за допомогою анотацій-->
+	<task:annotation-driven executor="taskExecutor"/>
+	<!--розмір пулу потоків 15 при потребі може збільшитись до 20-->
+	<!--розмір черги з завдань 1000-->
+	<task:executor id="taskExecutor" pool-size="15-20" queue-capacity="1000" />
+	
+	<!--Читає конфігураційний файл в якому збережені налаштування БД-->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="/META-INF/db.properties"/>
+
+	<!--Адаптер для JPA, Spring використовує адаптери для всіх вендорів JPA-->
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<!--виводить всі запити в консоль-->
+		<property name="showSql" value="true" />
+		<!--при підключені до БД якщо немає таблиць генерує їх-->
+		<property name="generateDdl" value="true" />
+	</bean>
+
+	<!--включає підтримку анотації @PersistentContext, потрібна репозиторіям-->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!--Вказує де знаходяться репозиторії, можна замінити на анотації @Repository-->
+	<jpa:repositories base-package="ua.repository"/>
+	<!--Включає опцію Spring перепрокидувати помилки які виникли в репозиторіях-->
+	<!--таким чином що б біло зручніше розуміти що за помилка виникла-->
+	<!--завдяки цьому деякі автори рекомендують використовувати @Repository і на сервісному рівні-->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<!--Опис біна який являється пулом підключень до БД-->
+	<!--конфігурація в основному з конфігураційного файла для БД-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:driverClass="${db.driverClassName}" p:jdbcUrl="${db.databaseurl}"
+		p:user="${db.username}" p:password="${db.password}" p:minPoolSize="5"
+		p:maxPoolSize="10" p:maxIdleTime="200">
+	</bean>
+	<!--Конфігурація EntityManagerFactory-->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="packagesToScan" value="ua.entity"></property>
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"></property>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${db.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">${db.hbm2ddl.auto}</prop>
+				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
+				<prop key="hibernate.jdbc.batch_size">1</prop>
+			</props>
+		</property>
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" id="persistenceProvider" />
+		</property>
+	</bean>
+	<!--Дозволяє використовувати анотацію @Transactional-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!--Конфіг менеджера який працює там де виристовуємо анотацію @Transactional-->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+</beans>

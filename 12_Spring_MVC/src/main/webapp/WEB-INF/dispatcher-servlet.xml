@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+<!-- 	включаємо підтримку анотацій -->
+	<mvc:annotation-driven/>
+<!-- 	скануємо пакет на наявність бінів -->
+	<context:component-scan base-package="ua.controller" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- Префікс відповідає за базове розташування (головну папку) веб сторінок -->
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<!-- Суфікс відповідає за розширення веб сторінок -->
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+<!-- 		працює це так, наприклад метод конролера повертає index -->
+<!-- 		додається префікс і суфікс в результаті виходить -->
+<!-- 		/WEB-INF/views/index.jsp -->
+	</bean>
+</beans>

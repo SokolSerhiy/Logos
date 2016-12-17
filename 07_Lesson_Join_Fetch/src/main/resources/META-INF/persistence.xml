@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<!-- 	одиниця роботи з БД, може бути багато одиниць для однієї БД, або декілька БД і по декілька одиниць на базу -->
+	<persistence-unit name="primary" transaction-type="RESOURCE_LOCAL">
+		<properties>
+<!-- 	клас драйвера який буде використовуватись -->
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+<!-- 	посилання для з'єднання з БД після останнього слеша назва БД, має бути вже створена, можна без таблиць -->
+			<property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1:3306/shop" />
+<!-- 	логін БД -->
+			<property name="hibernate.connection.username" value="root" />
+<!-- 	пароль БД -->
+			<property name="hibernate.connection.password" value="1987" />
+<!-- 	діалект який буде використовуватись -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+<!-- 	показує що робити з БД update - створити або оновити якщо потрібно і працювати далі -->
+<!-- 	create - щоразу створити при з'єднані з БД -->
+<!-- 	create-drop - БД існує доки працює програма дропається по завершенню і створюється при зєднанні -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+<!-- 	показувати в консолі згенеровані запити на тому діалекті що вибраний -->
+			<property name="hibernate.show_sql" value="true" />
+<!-- 	форматувати запити, дуже зручно! -->
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

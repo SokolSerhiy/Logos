@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+<!-- 	А тут починається магія -->
+<!--Бін це, зазвичай, сінглтон який створює спрінг-->
+<!--id - це ім'я біна за допомогою якого можна звернутись до цього біна при описі інших-->
+<!--class - обов'язковий атрибут що б спрінг знав з чиго робити бін-->
+	<bean id="ballada1" class="ua.classes.SimpleBallada"/>
+	
+	<bean id="ballada2" class="ua.classes.HeroBallada"/>
+<!--destroy-method - метод який спрінг викличе при завершені програми і знищенні екземпляру-->
+<!--init-method - метод який спрінг викличе відразу після створення екземпляру класу-->
+	<bean id="bard" class="ua.classes.Bard" 
+		destroy-method="death" init-method="born">
+<!--проперті - це поле класу, яке спрінг може заповнити як значенням--> 
+		<property name="name" value="Lutick"/>
+<!--або іншим біном, при цьому звязок працює через інтерфейс Ballada-->
+		<property name="ballada" ref="ballada2"/>
+	</bean>
+</beans>
