@@ -28,10 +28,17 @@ public class CategoryController {
 		categoryService.delete(id);
 		return "redirect:/admin/category";
 	}
-	
+	//вказуємо що це метод POST (статичний імпорт)
 	@RequestMapping(method=POST)
+	//вказуємо що в параметрах буде параметр name
 	public String save(@RequestParam String name){
+		//передаємо в сервіс для збереження
+		//об'єкту Category
 		categoryService.save(name);
+		//після пост методів в більшості випадків 
+		//потрібно робити радірект, щоб запобігти
+		//повторній відправці форми
+		//після редіректу всі параметри будуть видалені
 		return "redirect:/admin/category";
 	}
 }

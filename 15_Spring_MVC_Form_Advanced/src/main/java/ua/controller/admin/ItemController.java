@@ -65,15 +65,40 @@ public class ItemController {
 	}
 	
 	@RequestMapping(method=POST)
+	//id категорії з схованого інпуту
 	public String save(@RequestParam int categoryId,
+			//назва з текстового інпуту
 			@RequestParam String name,
+			//id виробника з селекту
 			@RequestParam int producerId,
+			//id-шки SpecificationString 
+			//з усіх селектів
+			//їх може бути стільки скільки 
+			//назв специфікацій стрічкових
+			//зв'язано з категорією
 			@RequestParam List<Integer> ssIds,
+			//id-шки NameOfSpecificationDigital
+			//з схованих інпутів
+			//їх може бути стільки скільки назв 
+			//специфікацій цифрових
+			//зв'язано з категорією
 			@RequestParam List<Integer> nosdIds,
+			//список значень з інпутів, на основі яких 
+			//буде збудовано об'єкти
+			//SpecificationDigital
 			@RequestParam List<BigDecimal> sdValues,
+			//id-шки одиниць виміру, які вибираються 
+			//з селекту для кожного окремого
+			//SpecificationDigital
 			@RequestParam List<Integer> mss,
+			//ціна, звичайний інпут
 			@RequestParam BigDecimal price,
+			//id одиниць виміру в яких 
+			//продається товар
 			@RequestParam int msId
+			//всі списки подані в одній послідовності
+			//для самих сміливих в сервісі метод
+			//який все це зберігає
 			){
 		itemService.save(categoryId, name, producerId, ssIds, nosdIds, sdValues, mss, price, msId);
 		return "redirect:/admin/item";
