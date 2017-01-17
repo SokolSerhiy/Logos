@@ -90,7 +90,11 @@ public class Main {
 		//FROM Item i JOIN FETCH i.category c JOIN
 		// i.specificationStrings ss JOIN FETCH i.measuringSystems
 		root.fetch("measuringSystems");
+		query.distinct(true);
 		List<Item> items = em.createQuery(query).getResultList();
+		for (Item item : items) {
+			System.out.println(item.getName());
+		}
 		em.getTransaction().commit();
 		em.close();
 		factory.close();

@@ -30,7 +30,7 @@ public class Main {
 			/* PreparedStatement добре підходить для запитів у яких є підстівні параметри**/
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO Person(name) values (?)");
 			/* цей метод дозволяє встановити підстівний параметр на позицію першого знаку запитання**/
-			ps.setString(1, "Ivan");
+			ps.setString(1, "Mykola");
 			/* цей метод краще використовувати коли у вас запит UPDATE, INSERT чи DELETE**/
 			ps.executeUpdate();
 			/* все потрібно закривати**/
@@ -49,6 +49,7 @@ public class Main {
 				System.out.println(rs.getString(2));
 			}
 		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
 
