@@ -1,6 +1,10 @@
 package ua.controller;
 
+import static ua.util.ParamBuilder.buildParams;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -48,36 +52,36 @@ public class AmountController {
 	}
 	
 	@GetMapping
-	public String show(Model model){
-		model.addAttribute("amounts", service.findAll());
+	public String show(Model model, @PageableDefault Pageable pageable){
+		model.addAttribute("amounts", service.findAll(pageable));
 		model.addAttribute("ingredients", ingredientService.findAll());
 		model.addAttribute("measuringSystems", measuringSystemService.findAll());
 		return "amount";
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Long id){
+	public String delete(@PathVariable Long id, @PageableDefault Pageable pageable){
 		service.delete(id);
-		return "redirect:/admin/amount";
+		return "redirect:/admin/amount"+buildParams(pageable);
 	}
 	
 	@GetMapping("/update/{id}")
-	public String update(@PathVariable Long id, Model model){
+	public String update(@PathVariable Long id, Model model, @PageableDefault Pageable pageable){
 		model.addAttribute("amount", service.findOne(id));
-		show(model);
+		show(model, pageable);
 		return "amount";
 	}
 	
 	@GetMapping("/cancel")
-	public String cancel(SessionStatus status){
+	public String cancel(SessionStatus status, @PageableDefault Pageable pageable){
 		status.setComplete();
-		return "redirect:/admin/amount";
+		return "redirect:/admin/amount"+buildParams(pageable);
 	}
 	
 	@PostMapping
-	public String save(@ModelAttribute("amount") Amount entity, SessionStatus status){
+	public String save(@ModelAttribute("amount") Amount entity, SessionStatus status, @PageableDefault Pageable pageable){
 		service.save(entity);
 		status.setComplete();
-		return "redirect:/admin/amount";
+		return "redirect:/admin/amount"+buildParams(pageable);
 	}
 }

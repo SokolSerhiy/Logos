@@ -1,7 +1,23 @@
 package ua.service;
 
-import ua.entity.Recipe;
+import java.util.List;
 
-public interface RecipeService extends CrudService<Recipe, Long>{
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import ua.entity.Recipe;
+import ua.form.RecipeForm;
+
+public interface RecipeService{
+
+	Page<Recipe> findAll(Pageable pageable);
+
+	RecipeForm findOne(Long id);
+
+	List<Recipe> findAll();
+
+	void save(RecipeForm entity);
+
+	void delete(Long id);
 
 }

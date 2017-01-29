@@ -1,8 +1,13 @@
 package ua.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -17,10 +22,11 @@ import ua.editor.AmountEditor;
 import ua.editor.CountryEditor;
 import ua.entity.Amount;
 import ua.entity.Country;
-import ua.entity.Recipe;
+import ua.form.RecipeForm;
 import ua.service.AmountService;
 import ua.service.CountryService;
 import ua.service.RecipeService;
+import ua.validator.RecipeValidator;
 
 @Controller
 @RequestMapping("/admin/recipe")
@@ -37,45 +43,50 @@ public class RecipeController {
 	private CountryService countryService;
 	
 	@ModelAttribute("recipe")
-	public Recipe getForm(){
-		return new Recipe();
+	public RecipeForm getForm(){
+		return new RecipeForm();
 	}
 	
 	@InitBinder("recipe")
 	protected void initBinder(WebDataBinder binder){
 	   binder.registerCustomEditor(Amount.class, new AmountEditor(amountService));
 	   binder.registerCustomEditor(Country.class, new CountryEditor(countryService));
+	   binder.setValidator(new RecipeValidator());
 	}
 	
 	@GetMapping
-	public String show(Model model){
-		model.addAttribute("recipes", service.findAll());
+	public String show(Model model, @PageableDefault Pageable pageable){
+		model.addAttribute("recipes", service.findAll(pageable));
 		model.addAttribute("amounts", amountService.findAll());
 		model.addAttribute("countries", countryService.findAll());
 		return "recipe";
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Long id){
+	public String delete(@PathVariable Long id, @PageableDefault Pageable pageable){
 		service.delete(id);
 		return "redirect:/admin/recipe";
 	}
 	
 	@GetMapping("/update/{id}")
-	public String update(@PathVariable Long id, Model model){
+	public String update(@PathVariable Long id, Model model, @PageableDefault Pageable pageable){
 		model.addAttribute("recipe", service.findOne(id));
-		show(model);
+		show(model, pageable);
 		return "recipe";
 	}
 	
 	@GetMapping("/cancel")
-	public String cancel(SessionStatus status){
+	public String cancel(SessionStatus status, @PageableDefault Pageable pageable){
 		status.setComplete();
 		return "redirect:/admin/recipe";
 	}
 	
 	@PostMapping
-	public String save(@ModelAttribute("recipe") Recipe entity, SessionStatus status){
+	public String save(@ModelAttribute("recipe") @Valid RecipeForm entity,BindingResult br, SessionStatus status, @PageableDefault Pageable pageable, Model model){
+		if(br.hasErrors()){
+			show(model, pageable);
+			return "recipe";
+		}
 		service.save(entity);
 		status.setComplete();
 		return "redirect:/admin/recipe";

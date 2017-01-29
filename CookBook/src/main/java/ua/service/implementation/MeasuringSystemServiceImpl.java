@@ -3,6 +3,8 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.MeasuringSystem;
@@ -32,5 +34,10 @@ public class MeasuringSystemServiceImpl implements MeasuringSystemService{
 	@Override
 	public void delete(Long id) {
 		measuringSystemRepository.delete(id);
+	}
+
+	@Override
+	public Page<MeasuringSystem> findAll(Pageable pageable) {
+		return measuringSystemRepository.findAll(pageable);
 	}
 }

@@ -3,6 +3,8 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Country;
@@ -32,6 +34,11 @@ public class CountryServiceImpl implements CountryService{
 	@Override
 	public void delete(Long id) {
 		countryRepository.delete(id);
+	}
+
+	@Override
+	public Page<Country> findAll(Pageable pageable) {
+		return countryRepository.findAll(pageable);
 	}
 
 }
