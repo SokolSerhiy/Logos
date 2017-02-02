@@ -9,7 +9,7 @@ import ua.entity.Book;
 
 public interface BookRepository extends JpaRepository<Book, Integer>{
 
-	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.author")
+	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.author a LEFT JOIN FETCH a.country")
 	List<Book> findAll();
 	
 	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.author WHERE b.id = ?1")

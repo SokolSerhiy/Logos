@@ -48,17 +48,18 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3 col-xs-3"><h3>Book name</h3></div>
-			<div class="col-md-3 col-xs-3"><h3>Author name</h3></div>
-			<div class="col-md-3 col-xs-3"><h3>Update</h3></div>
-			<div class="col-md-3 col-xs-3"><h3>Delete</h3></div>
+			<div class="col-md-3 col-xs-3"><h3>Book</h3></div>
+			<div class="col-md-3 col-xs-3"><h3>Author</h3></div>
+			<div class="col-md-3 col-xs-3"><h3>Country</h3></div>
+			<div class="col-md-3 col-xs-3"><h3>Options</h3></div>
 		</div>
 			<c:forEach items="${books}" var="book">
 				<div class="row">
 					<div class="col-md-3 col-xs-3">${book.name}</div>
 					<div class="col-md-3 col-xs-3">${book.author.name}</div>
-					<div class="col-md-3 col-xs-3"><a class="btn btn-warning" href="/admin/book/update/${book.id}">update</a></div>
-					<div class="col-md-3 col-xs-3"><a class="btn btn-danger" href="/admin/book/delete/${book.id}">delete</a></div>
+					<div class="col-md-3 col-xs-3">${book.author.country.name}</div>
+					<div class="col-md-3 col-xs-3"><a class="btn btn-warning" href="/admin/book/update/${book.id}">update</a>
+					<a class="btn btn-danger" href="/admin/book/delete/${book.id}">delete</a></div>
 				</div>
 			</c:forEach>
 	</div>
