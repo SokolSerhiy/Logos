@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <!DOCTYPE html>
 <html>
 <head>
+<security:csrfMetaTags/>
 <meta charset="UTF-8">
 <script type="text/javascript" src="/resources/js/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
