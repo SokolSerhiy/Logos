@@ -7,7 +7,7 @@
 <title>Index</title>
 </head>
 <body>
-<h2>Hello</h2>
+<h2>${message}</h2>
 <a href="/admin">admin</a>
 </body>
 </html>

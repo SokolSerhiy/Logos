@@ -47,9 +47,8 @@ public class MeasuringSystemController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", measuringSystemService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-measuringSystem";
 	}
 	

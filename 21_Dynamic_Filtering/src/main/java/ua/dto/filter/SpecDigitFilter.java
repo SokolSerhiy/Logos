@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class SpecDigitFilter {
 	
-	private final static Pattern PATTERN = Pattern.compile("^([0-9]{1,18}\\.[0-9]{0,2})|([0-9]{1,18}\\,[0-9]{0,2})$");
+	private final static Pattern PATTERN = Pattern.compile("^([0-9]{1,18}\\.[0-9]{0,2})|([0-9]{1,18}\\,[0-9]{0,2}|([0-9]{1,18}))$");
 
 	private Integer nameId;
 	

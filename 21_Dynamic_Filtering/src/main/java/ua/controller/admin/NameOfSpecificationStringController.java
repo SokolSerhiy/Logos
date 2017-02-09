@@ -49,9 +49,8 @@ public class NameOfSpecificationStringController {
 	
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", stringService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-nameOfSpecificationString";
 	}
 	

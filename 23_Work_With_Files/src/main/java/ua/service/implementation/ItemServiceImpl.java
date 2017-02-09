@@ -97,9 +97,7 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public Page<Item> findAll(ItemFilter filter, Pageable pageable) {
-		System.out.println("---------------------------------------------------------------");
 		Page<Item> items = itemRepository.findAll(new ItemSpecification(filter),pageable);
-		System.out.println("---------------------------------------------------------------");
 		return items;
 	}
 }

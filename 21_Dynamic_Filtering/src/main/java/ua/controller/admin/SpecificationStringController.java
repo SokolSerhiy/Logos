@@ -55,10 +55,9 @@ public class SpecificationStringController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", specificationStringService.findAll(filter, pageable));
 		model.addAttribute("nosss", nameOfSpecificationStringService.findAll());
-		status.setComplete();
 		return "admin-specificationString";
 	}
 	

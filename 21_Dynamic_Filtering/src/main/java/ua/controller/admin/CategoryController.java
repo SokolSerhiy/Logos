@@ -56,9 +56,8 @@ public class CategoryController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", categoryService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-category";
 	}
 	

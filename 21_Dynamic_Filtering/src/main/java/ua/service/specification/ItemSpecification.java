@@ -34,6 +34,7 @@ public class ItemSpecification implements Specification<Item>{
 			DigitSpecification specification = new DigitSpecification(digitFilter);
 			Predicate predicate = specification.toPredicate(root, query, cb);
 			if(predicate!=null){
+				System.out.println("Hello");
 				predicates.add(predicate);
 			}
 		}
@@ -150,6 +151,8 @@ public class ItemSpecification implements Specification<Item>{
 		public Predicate toPredicate(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 			filterByValue(root, query, cb);
 			if(predicatesDigit.isEmpty())return null;
+			filterByMsId(root, query, cb);
+			filterByNameId(root, query, cb);
 			Predicate[] array = new Predicate[predicatesDigit.size()];
 			predicatesDigit.toArray(array);
 			return cb.and(array);
