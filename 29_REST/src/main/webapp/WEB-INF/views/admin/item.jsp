@@ -16,7 +16,6 @@ $(function(){
 			$.ajax({
 				url : '/category/'+id,
 				success : function(category) {
-					console.log(category);
 					for(var i = 0; i < category.nameOfSpecStrings.length; i++){
 						var formGroup = $(document.createElement("div"));
 						formGroup.addClass('form-group specString');

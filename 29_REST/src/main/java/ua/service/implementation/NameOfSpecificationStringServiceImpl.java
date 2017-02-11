@@ -83,7 +83,6 @@ public class NameOfSpecificationStringServiceImpl implements NameOfSpecification
 	
 	private SpecStringDto mapper(SpecificationString specificationString){
 		SpecStringDto dto = new SpecStringDto();
-		System.out.println(specificationString.getName());
 		dto.setName(specificationString.getName());
 		dto.setId(specificationString.getId());
 		return dto;
