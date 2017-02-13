@@ -10,4 +10,6 @@ public interface ItemService {
 
 	void delete(int id);
 
+	List<Item> findByCategoryId(int id);
+
 }
