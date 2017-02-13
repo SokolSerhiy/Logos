@@ -4,7 +4,7 @@
 <h2>Hello</h2>
 <ul>
 	<c:forEach items="${categories}" var="category">
-		<li><a href="">${category.name}</a></li>
+		<li><a href="/category/${category.id}">${category.name}</a></li>
 	</c:forEach>
 </ul>
 <a href="/admin">admin</a>

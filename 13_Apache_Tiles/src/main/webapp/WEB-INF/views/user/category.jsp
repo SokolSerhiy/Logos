@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h2>Category: ${category.name}</h2>
 <c:forEach items="${items}" var="item">
-	<div>${item.name} ${item.price}</div>
+	<div>${item.name} ${item.price} $</div>
 </c:forEach>
 <c:if test="${empty items}">
 	<h3>Category is empty</h3>
