@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+	<mvc:resources mapping="/images/**" location="file:${catalina.home}/images/" cache-period="3600" />
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="3600" />
 	<mvc:annotation-driven validator="validator">
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
@@ -40,6 +42,4 @@
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	</bean>
 	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
-	<mvc:resources mapping="/images/**" location="file:${catalina.home}/images/" cache-period="3600" />
-	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="3600" />
 </beans>
