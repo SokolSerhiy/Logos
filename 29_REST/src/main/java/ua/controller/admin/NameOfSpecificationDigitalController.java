@@ -48,9 +48,8 @@ public class NameOfSpecificationDigitalController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", digitalService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-nameOfSpecificationDigital";
 	}
 	
@@ -63,14 +62,14 @@ public class NameOfSpecificationDigitalController {
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("nosd",digitalService.findOne(id));
-		model.addAttribute("page", digitalService.findAll(filter, pageable));
+		show(model, pageable, filter);
 		return "admin-nameOfSpecificationDigital";
 	}
 	
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("nosd")@Valid NameOfSpecificationDigital form, BindingResult br, SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("page", digitalService.findAll(filter, pageable));
+			show(model, pageable, filter);
 			return "admin-nameOfSpecificationDigital";
 		}
 		digitalService.save(form);

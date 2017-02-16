@@ -55,18 +55,16 @@ public class SpecificationStringController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", specificationStringService.findAll(filter, pageable));
 		model.addAttribute("nosss", nameOfSpecificationStringService.findAll());
-		status.setComplete();
 		return "admin-specificationString";
 	}
 	
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("ss", specificationStringService.findOne(id));
-		model.addAttribute("page", specificationStringService.findAll(filter, pageable));
-		model.addAttribute("nosss", nameOfSpecificationStringService.findAll());
+		show(model, pageable, filter);
 		return "admin-specificationString";
 	}
 	
@@ -79,8 +77,7 @@ public class SpecificationStringController {
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("ss")@Valid SpecificationString form,BindingResult br, Model model, SessionStatus status, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("page", specificationStringService.findAll(filter, pageable));
-			model.addAttribute("nosss", nameOfSpecificationStringService.findAll());
+			show(model, pageable, filter);
 			return "admin-specificationString";
 		}
 		specificationStringService.save(form);

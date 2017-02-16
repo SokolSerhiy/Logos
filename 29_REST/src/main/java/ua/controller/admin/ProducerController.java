@@ -48,9 +48,8 @@ public class ProducerController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", producerService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-producer";
 	}
 	
@@ -63,14 +62,14 @@ public class ProducerController {
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("producer", producerService.findOne(id));
-		model.addAttribute("page", producerService.findAll(filter, pageable));
+		show(model, pageable, filter);
 		return "admin-producer";
 	}
 	
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("producer")@Valid Producer form, BindingResult br, Model model, SessionStatus status, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("page", producerService.findAll(filter, pageable));
+			show(model, pageable, filter);
 			return "admin-producer";
 		}
 		producerService.save(form);

@@ -94,8 +94,6 @@ public class ItemController {
 		model.addAttribute("producers", producerService.findAll());
 		model.addAttribute("nosss", nameOfSpecificationStringService.findAllLoadedSS());
 		model.addAttribute("nosds", nameOfSpecificationDigitalService.findAllLoadedSD());
-		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("measuringSystems", measuringSystemService.findAll());
 		return "admin-item";
 	}
 	
@@ -105,15 +103,21 @@ public class ItemController {
 		return "redirect:/admin/item"+getParams(pageable, filter);
 	}
 	
+	@RequestMapping("/add/{id}")
+	public String showAdd(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
+		model.addAttribute("measuringSystems",measuringSystemService.findAll());
+		model.addAttribute("page", itemService.findAll(filter, pageable));
+		model.addAttribute("category", categoryService.findOne(id));
+		model.addAttribute("nosss", nameOfSpecificationStringService.findByCategoryId(id));
+		model.addAttribute("nosds", nameOfSpecificationDigitalService.findByCategoryId(id));
+		model.addAttribute("producers", producerService.findAll());
+		return "admin-item";
+	}
+	
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("item") @Valid ItemForm item, BindingResult br, Model model, SessionStatus sessionStatus, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("measuringSystems",measuringSystemService.findAll());
-			model.addAttribute("page", itemService.findAll(filter, pageable));
-			model.addAttribute("category", item.getCategory());
-			model.addAttribute("nosss", nameOfSpecificationStringService.findByCategoryId(item.getCategory().getId()));
-			model.addAttribute("nosds", nameOfSpecificationDigitalService.findByCategoryId(item.getCategory().getId()));
-			model.addAttribute("producers", producerService.findAll());
+			show(model, pageable, filter);
 			return "admin-item";
 		}
 		itemService.save(item);

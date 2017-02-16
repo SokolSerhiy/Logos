@@ -56,9 +56,8 @@ public class CategoryController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", categoryService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-category";
 	}
 	
@@ -71,14 +70,14 @@ public class CategoryController {
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("category",categoryService.findOne(id));
-		model.addAttribute("page", categoryService.findAll(filter, pageable));
+		show(model, pageable, filter);
 		return "admin-category";
 	}
 	
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("category") @Valid Category category,BindingResult br, SessionStatus status,Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("page", categoryService.findAll(filter, pageable));
+			show(model, pageable, filter);
 			return "admin-category";
 		}
 		categoryService.save(category);

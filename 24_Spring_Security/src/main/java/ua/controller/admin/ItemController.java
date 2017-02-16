@@ -89,12 +89,11 @@ public class ItemController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
 		model.addAttribute("page", itemService.findAll(filter, pageable));
 		model.addAttribute("producers", producerService.findAll());
 		model.addAttribute("nosss", nameOfSpecificationStringService.findAllLoadedSS());
 		model.addAttribute("nosds", nameOfSpecificationDigitalService.findAllLoadedSD());
-		status.setComplete();
 		return "admin-item";
 	}
 	
@@ -118,12 +117,7 @@ public class ItemController {
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("item") @Valid ItemForm item, BindingResult br, Model model, SessionStatus sessionStatus, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("measuringSystems",measuringSystemService.findAll());
-			model.addAttribute("page", itemService.findAll(filter, pageable));
-			model.addAttribute("category", item.getCategory());
-			model.addAttribute("nosss", nameOfSpecificationStringService.findByCategoryId(item.getCategory().getId()));
-			model.addAttribute("nosds", nameOfSpecificationDigitalService.findByCategoryId(item.getCategory().getId()));
-			model.addAttribute("producers", producerService.findAll());
+			show(model, pageable, filter);
 			return "admin-item";
 		}
 		itemService.save(item);

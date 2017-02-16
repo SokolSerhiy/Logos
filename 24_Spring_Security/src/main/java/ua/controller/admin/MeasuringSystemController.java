@@ -47,9 +47,8 @@ public class MeasuringSystemController {
 	}
 	
 	@RequestMapping
-	public String show(SessionStatus status, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
+	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("page", measuringSystemService.findAll(filter, pageable));
-		status.setComplete();
 		return "admin-measuringSystem";
 	}
 	
@@ -62,14 +61,14 @@ public class MeasuringSystemController {
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		model.addAttribute("ms", measuringSystemService.findOne(id));
-		model.addAttribute("page", measuringSystemService.findAll(filter, pageable));
+		show(model, pageable, filter);
 		return "admin-measuringSystem";
 	}
 	
 	@RequestMapping(method=POST)
 	public String save(@ModelAttribute("ms")@Valid MeasuringSystem form, BindingResult br, Model model, SessionStatus status, @PageableDefault Pageable pageable, @ModelAttribute("filter") BasicFilter filter){
 		if(br.hasErrors()){
-			model.addAttribute("page", measuringSystemService.findAll(filter, pageable));
+			show(model, pageable, filter);
 			return "admin-measuringSystem";
 		}
 		measuringSystemService.save(form);
