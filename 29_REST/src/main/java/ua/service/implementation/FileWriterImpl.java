@@ -21,6 +21,7 @@ public class FileWriterImpl implements FileWriter{
 	public boolean write(Folder folder, MultipartFile file, int id) {
 		if(!file.isEmpty()){
 			File pathToHome = new File(System.getProperty("catalina.home"));
+			System.out.println(pathToHome);
 			File pathToFolder = new File(pathToHome, "images" + File.separator + folder.name().toLowerCase());
 			if(!pathToFolder.exists()){
 				pathToFolder.mkdirs();

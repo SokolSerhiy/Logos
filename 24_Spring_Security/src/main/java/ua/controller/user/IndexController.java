@@ -21,7 +21,8 @@ public class IndexController {
 
 	@RequestMapping("/")
 	public String index(Principal principal){
-//		principal.getName();
+		if(principal!=null)
+		System.out.println(principal.getName());
 		return "user-index";
 	}
 	

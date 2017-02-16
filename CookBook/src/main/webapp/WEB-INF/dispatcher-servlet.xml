@@ -39,4 +39,5 @@
 <!-- 		додається префікс і суфікс в результаті виходить -->
 <!-- 		/WEB-INF/views/index.jsp -->
 	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 </beans>

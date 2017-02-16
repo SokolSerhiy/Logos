@@ -86,7 +86,7 @@ public class ItemServiceImpl implements ItemService{
 		item.setPrice(new BigDecimal(itemForm.getPrice().replace(',', '.')));
 		item.setProducer(itemForm.getProducer());
 		item.setSpecificationStrings(itemForm.getSpecificationStrings());
-		itemRepository.saveAndFlush(item);
+		item = itemRepository.saveAndFlush(item);
 		item.setSpecificationDigitals(sds);
 		if(fileWriter.write(Folder.ITEM, itemForm.getFile(), item.getId())){
 			if(item.getVersion()==null)item.setVersion(0);
