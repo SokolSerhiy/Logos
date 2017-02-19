@@ -35,4 +35,9 @@ public class NameOfSpecificationStringServiceImpl implements NameOfSpecification
 	public List<NameOfSpecificationString> findByCategoryId(int id) {
 		return nameOfSpecificationStringRepository.findByCategoryId(id);
 	}
+
+	@Override
+	public NameOfSpecificationString findOne(int nossId) {
+		return nameOfSpecificationStringRepository.findOne(nossId);
+	}
 }

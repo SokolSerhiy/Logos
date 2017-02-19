@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import ua.entity.NameOfSpecificationString;
+import ua.entity.SpecificationString;
 import ua.service.NameOfSpecificationStringService;
 import ua.service.SpecificationStringService;
 
@@ -35,6 +38,10 @@ public class SpecificationStringController {
 	
 	@RequestMapping(method=POST)
 	public String save(@RequestParam String name, @RequestParam int nossId){
+		SpecificationString ss = new SpecificationString();
+		ss.setName(name);
+		NameOfSpecificationString noss = nameOfSpecificationStringService.findOne(nossId);
+		ss.setNameOfSpecificationString(noss);
 		specificationStringService.save(name, nossId);
 		return "redirect:/admin/ss";
 	}

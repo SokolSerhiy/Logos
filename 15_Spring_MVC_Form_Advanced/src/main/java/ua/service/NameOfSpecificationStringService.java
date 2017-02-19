@@ -14,4 +14,6 @@ public interface NameOfSpecificationStringService {
 
 	List<NameOfSpecificationString> findByCategoryId(int id);
 
+	NameOfSpecificationString findOne(int nossId);
+
 }
