@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+<!-- 	опис темплейту для користувачів -->
+<!-- 	потрібно вказати ім'я а також файл в якому описано як саме будувати сторінку -->
+	<definition name="user" template="/WEB-INF/layout/user/classic.jsp">
+<!-- 		вказуємо імена атрибутів і файли які туди будуть передані -->
+		<put-attribute name="footer" value="/WEB-INF/layout/user/footer.jsp" />
+		<put-attribute name="header" value="/WEB-INF/layout/user/header.jsp" />
+	</definition>
+<!-- 	аналогічно для адміністратора -->
+	<definition name="admin" template="/WEB-INF/layout/admin/classic.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/user/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/user/footer.jsp" />
+		<put-attribute name="subHeader" value="/WEB-INF/layout/admin/subHeader.jsp"/>
+	</definition>
+<!-- 	тут ми вказуємо як саме будувати сторінку в залежності від того -->
+<!-- 	які два слова розділені "-" прийдуть з котролера -->
+<!-- 	перше слово буде підставлено в всюди де {1} -->
+<!-- 	друге відповідно всюди де {2} -->
+	<definition name="*-*" extends="{1}">
+		<put-attribute name="title" value="{2}" />
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+<!-- 	припустимо що метод контролера повернув admin-item -->
+<!-- 	тоді буде використаний темплейт описаний вище як -->
+<!-- 	definition name="admin" тайтл буде встановлений item -->
+<!-- 	а jsp для body буде взята з /WEB-INF/views/admin/item.jsp -->
+</tiles-definitions>
