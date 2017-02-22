@@ -11,4 +11,6 @@ public interface AmountRepository extends JpaRepository<Amount, Long>{
 	
 	@Query("SELECT a FROM Amount a LEFT JOIN FETCH a.system LEFT JOIN FETCH a.ingredient")
 	List<Amount> findAll();
+	@Query("SELECT a FROM Amount a LEFT JOIN FETCH a.system LEFT JOIN FETCH a.ingredient WHERE a.id = ?1")
+	Amount findOne(Long id);
 }
