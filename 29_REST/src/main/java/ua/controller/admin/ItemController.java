@@ -91,9 +91,11 @@ public class ItemController {
 	@RequestMapping
 	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") ItemFilter filter){
 		model.addAttribute("page", itemService.findAll(filter, pageable));
+		model.addAttribute("categories", categoryService.findAll());
 		model.addAttribute("producers", producerService.findAll());
 		model.addAttribute("nosss", nameOfSpecificationStringService.findAllLoadedSS());
 		model.addAttribute("nosds", nameOfSpecificationDigitalService.findAllLoadedSD());
+		model.addAttribute("measuringSystems", measuringSystemService.findAll());
 		return "admin-item";
 	}
 	

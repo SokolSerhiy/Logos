@@ -12,6 +12,8 @@
 $(function(){
 	$('#category').change(function() {
 		var id = $(this).val();
+		$('.specString').remove();
+		$('.specDigit').remove();
 		if(id!=0){
 			$.ajax({
 				url : '/category/'+id,
@@ -32,7 +34,6 @@ $(function(){
 						select.attr('name', 'specificationStrings');
 						div.append(select);
 						for(var j = 0; j < category.nameOfSpecStrings[i].specStrings.length; j++){
-							console.log(category.nameOfSpecStrings[i].specStrings[j].name);
 							var option = $(document.createElement("option"));
 							option.val(category.nameOfSpecStrings[i].specStrings[j].id);
 							option.html(category.nameOfSpecStrings[i].specStrings[j].name);
