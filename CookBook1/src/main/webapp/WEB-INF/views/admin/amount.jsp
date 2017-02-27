@@ -30,15 +30,21 @@
 			<div class="col-md-12 col-xs-12">
 				<form:form class="form-horizontal" action="/admin/amount" method="POST" modelAttribute="amount">
 					<div class="form-group">
+						<label class="col-sm-10 col-sm-offset-2 control-label" for="ingredient" style="color:red;text-align:left;"><form:errors path="ingredient"/></label>
+					</div>
+					<div class="form-group">
     					<label for="ingredient" class="col-sm-2 control-label">Ingredient</label>
     					<div class="col-sm-10">
       						<form:select class="form-control" path="ingredient" id="ingredient" items="${ingredients}" itemValue="id" itemLabel="name"/>
     					</div>
   					</div>
+  					<div class="form-group">
+						<label class="col-sm-10 col-sm-offset-2 control-label" for="amount" style="color:red;text-align:left;"><form:errors path="amount"/></label>
+					</div>
 					<div class="form-group">
     					<label for="name" class="col-sm-2 control-label">Amount</label>
     					<div class="col-sm-10">
-      						<input type="text" class="form-control" name="amount" id="name">
+      						<form:input type="text" class="form-control" path="amount" id="name"/>
     					</div>
   					</div>
   					<div class="form-group">

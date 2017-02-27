@@ -1,5 +1,6 @@
 package ua.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface AmountRepository extends JpaRepository<Amount, Long>{
 	List<Amount> findAll();
 	@Query("SELECT a FROM Amount a LEFT JOIN FETCH a.system LEFT JOIN FETCH a.ingredient WHERE a.id = ?1")
 	Amount findOne(Long id);
+	@Query("SELECT a FROM Amount a WHERE a.amount=?1 and a.ingredient.id=?2 and a.system.id=?3")
+	Amount findUnique(BigDecimal amount, Long ingredientId, Long systemId);
 }

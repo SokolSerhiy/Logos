@@ -6,4 +6,6 @@ import ua.entity.Ingredient;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long>{
 
+	Ingredient findByName(String name);
+
 }

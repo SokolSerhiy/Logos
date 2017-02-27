@@ -13,6 +13,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/js/chosen.jquery.min.js"></script>
 <link rel="stylesheet" href="/resources/css/chosen.min.css">
+<link rel="stylesheet" href="/resources/css/style.css">
 <script type="text/javascript">
 	$(function() {
 		$("select").chosen();

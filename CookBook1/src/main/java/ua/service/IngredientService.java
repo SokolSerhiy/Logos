@@ -13,4 +13,6 @@ public interface IngredientService{
 	void save(Ingredient entity);
 	
 	void delete(Long id);
+
+	Ingredient findByName(String name);
 }

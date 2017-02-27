@@ -1,9 +1,14 @@
 package ua.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import ua.entity.Ingredient;
 import ua.service.IngredientService;
+import ua.validator.IngredientValidator;
 
 @Controller
 @RequestMapping("/admin/ingredient")
@@ -21,6 +27,11 @@ public class IngredientController {
 
 	@Autowired
 	private IngredientService ingredientService;
+	
+	@InitBinder("ingredient")
+	protected void bind(WebDataBinder binder){
+		binder.setValidator(new IngredientValidator(ingredientService));
+	}
 	
 	@ModelAttribute("ingredient")
 	public Ingredient getForm(){
@@ -47,7 +58,10 @@ public class IngredientController {
 	}
 	
 	@PostMapping
-	public String save(@ModelAttribute("ingredient")Ingredient ingredient, SessionStatus status){
+	public String save(@ModelAttribute("ingredient") @Valid Ingredient ingredient, BindingResult br, Model model, SessionStatus status){
+		if(br.hasErrors()){
+			return show(model);
+		}
 		ingredientService.save(ingredient);
 		status.setComplete();
 		return "redirect:/admin/ingredient";
