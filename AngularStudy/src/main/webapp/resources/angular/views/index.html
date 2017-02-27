@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="https://code.angularjs.org/1.6.2/angular-route.min.js"></script>
+	<script src="/resources/js/app.js"></script>
+    <script src="/resources/js/ingredient.js"></script>
+    <script src="/resources/js/ms.js"></script>
+    <script src="/resources/js/country.js"></script>
+    <script src="/resources/js/amount.js"></script>
+    <style>
+        .page-size{
+            min-width: 80px;
+        }
+    </style>
+<title>Index</title>
+</head>
+<body>
+<base href="/">
+<base href="/admin/ingredient">
+                <nav class="navbar navbar-default" ng-controller="navController">
+                    <div class="container-fluid">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li ng-class="links[0].class" ng-click=clickActivate(0)><a href="/admin/ingredient">Ingredient</a></li>
+                                <li ng-class="links[1].class" ng-click=clickActivate(1)><a href="/admin/ms">Measuring system</a></li>
+                                <li ng-class="links[2].class" ng-click=clickActivate(2)><a href="/admin/country">Country</a></li>
+                                <li ng-class="links[3].class" ng-click=clickActivate(3)><a href="/admin/amount">Amount</a></li>
+                                <li ng-class="links[4].class" ng-click=clickActivate(4)><a href="/admin/recipe">Recipe</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+        <div class="container-fluid">
+            <div ng-view></div>
+        </div>
+</body>
+</html>

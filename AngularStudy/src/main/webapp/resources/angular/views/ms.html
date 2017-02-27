@@ -1,0 +1,92 @@
+<div class="row" ng-controller="msController">
+    <div class="col-xs-12 col-sm-3">
+        <form class="form-inline">
+            <div class="form-group">
+                <input ng-model="search" placeholder="Search" class="form-control">
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-12 col-sm-7">
+        <div ng-show="currentView == 'table' && items.content.length" class="col-xs-12 col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Measuring system name</th>
+                        <th class="text-center">Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in items.content">
+                        <td>{{item.name}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-xs btn-primary" ng-click="editOrCreate(item)">
+                                Edit
+                            </button>
+                            <button class="btn btn-xs btn-danger" ng-click="delete(item)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button class="btn btn-primary" ng-click="refresh()">Refresh</button>
+                <button class="btn btn-primary" ng-click="editOrCreate()">New</button>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 text-center" ng-show="!items.content.length">
+            No items found
+        </div>
+        <div ng-show="currentView == 'edit'" class="col-xs-12 col-sm-12">
+            <form class="form-horizontal" ng-show="currentView == 'edit'">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" ng-model="currentItem.name">
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button class="btn btn-primary" ng-click="saveEdit(currentItem)">Save</button> 
+                        <button class="btn btn-primary" ng-click="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-show="currentView == 'table' && items.content.length" class="col-xs-12 col-sm-12 text-center">
+            <ul class="pagination">
+                <li ng-class="{true:'disabled', false:''}[items.first]" ng-click="firstPage()"><a href="">&lt;&lt;</a></li>
+                <li ng-class="{true:'disabled', false:''}[items.first]" ng-click="previousPage()"><a href="">&lt;</a></li>
+                <li ng-repeat="page in pages" ng-class="{true:'active', false:''}[currentPage==page]">
+                    <a href="" ng-click="changePage(page)">{{page}}</a>
+                </li>
+                <li ng-class="{true:'disabled', false:''}[items.last]" ng-click="nextPage()"><a href="">&gt;</a></li>
+                <li ng-class="{true:'disabled', false:''}[items.last]" ng-click="lastPage()"><a href="">&gt;&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <div class="row">
+			<div class="col-md-6 col-xs-6">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li ng-repeat="pageSort in pageSorts" ng-class="{true:'active', false:''}[sort==pageSort.param]">
+                            <a href="" ng-click="changeSort(pageSort.param)">{{pageSort.name}}</a>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-6">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Size <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu page-size">
+                        <li ng-repeat="size in pageSizes" ng-class="{true:'active', false:''}[items.size==size]">
+                            <a href="" ng-click="changeSize(size)">{{size}}</a>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
