@@ -3,6 +3,8 @@ package ua.controller.admin;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,7 @@ import ua.service.AmountService;
 import ua.service.IngredientService;
 import ua.service.MeasuringSystemService;
 import ua.validator.AmountValidator;
-
+import static ua.util.ParamBuilder.*;
 @Controller
 @RequestMapping("/admin/amount")
 @SessionAttributes("amount")
@@ -53,31 +55,31 @@ public class AmountController {
 	}
 	
 	@GetMapping
-	public String show(Model model){
-		model.addAttribute("amounts", amountService.findAll());
+	public String show(Model model, @PageableDefault Pageable pageable){
+		model.addAttribute("page", amountService.findAll(pageable));
 		model.addAttribute("measuringSystems", measuringSystemService.findAll());
 		model.addAttribute("ingredients", ingredientService.findAll());
 		return "admin-amount";
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Long id){
+	public String delete(@PathVariable Long id, @PageableDefault Pageable pageable){
 		amountService.delete(id);
-		return "redirect:/admin/amount";
+		return "redirect:/admin/amount"+getParams(pageable);
 	}
 	
 	@GetMapping("/update/{id}")
-	public String update(@PathVariable Long id, Model model){
+	public String update(@PathVariable Long id, Model model, @PageableDefault Pageable pageable){
 		model.addAttribute("amount", amountService.findForm(id));
-		return show(model);
+		return show(model, pageable);
 	}
 	
 	@PostMapping
-	public String save(@ModelAttribute("amount") @Valid AmountForm amount, BindingResult br, Model model, SessionStatus status){
-		if(br.hasErrors()) return show(model);
+	public String save(@ModelAttribute("amount") @Valid AmountForm amount, BindingResult br, Model model, SessionStatus status, @PageableDefault Pageable pageable){
+		if(br.hasErrors()) return show(model, pageable);
 		amountService.save(amount);
 		status.setComplete();
-		return "redirect:/admin/amount";
+		return "redirect:/admin/amount"+getParams(pageable);
 	}
 	
 }
