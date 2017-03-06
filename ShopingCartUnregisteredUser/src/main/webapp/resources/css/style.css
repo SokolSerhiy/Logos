@@ -7,7 +7,7 @@
 	flex-grow:0;
 	flex-basis: 20%;
 	box-sizing: border-box;
-	border: 2px solid gray;
+	border: 2px solid lightgray;
 	padding: 10px;
 }
 .navbar-default .navbar-nav>li>.cart{
