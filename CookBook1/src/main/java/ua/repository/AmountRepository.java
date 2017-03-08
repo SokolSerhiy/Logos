@@ -6,11 +6,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import ua.entity.Amount;
 
-public interface AmountRepository extends JpaRepository<Amount, Long>{
+public interface AmountRepository extends JpaRepository<Amount, Long>, JpaSpecificationExecutor<Amount>{
 	
 	@Query("SELECT a FROM Amount a LEFT JOIN FETCH a.system LEFT JOIN FETCH a.ingredient")
 	List<Amount> findAll();

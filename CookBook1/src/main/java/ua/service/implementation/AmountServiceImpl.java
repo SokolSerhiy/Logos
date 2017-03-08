@@ -8,12 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ua.dto.filter.AmountFilter;
 import ua.dto.form.AmountForm;
 import ua.entity.Amount;
 import ua.entity.Ingredient;
 import ua.entity.MeasuringSystem;
 import ua.repository.AmountRepository;
 import ua.service.AmountService;
+import ua.specification.AmountSpecification;
 
 @Service
 public class AmountServiceImpl implements AmountService{
@@ -64,8 +66,8 @@ public class AmountServiceImpl implements AmountService{
 	}
 
 	@Override
-	public Page<Amount> findAll(Pageable pageable) {
-		return amountRepository.findAll(pageable);
+	public Page<Amount> findAll(Pageable pageable, AmountFilter filter) {
+		return amountRepository.findAll(new AmountSpecification(filter), pageable);
 	}
 
 }

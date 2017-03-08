@@ -3,6 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="/WEB-INF/custom.tld" prefix="custom"%>
+<style>
+	.filter .control-label{
+		text-align: left;
+	}
+	.filter span{
+		display: block;
+	}
+</style>
 <div class="row">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -24,7 +32,32 @@
 	</nav>
 </div>
 <div class="row">
-	<div class="col-md-3 col-xs-12"></div>
+	<div class="col-md-3 col-xs-12">
+		<form:form class="form-horizontal filter" action="/admin/amount" method="GET" modelAttribute="filter">
+			<custom:hiddenInputs excludeParams="_ingredientIds, _systemIds, systemIds, ingredientIds, max, min"/>
+			<div class="form-group">
+				<div class="col-sm-6">
+					<form:input path="min" class="form-control" placeholder="Min"/>
+				</div>
+				<div class="col-sm-6">
+					<form:input path="max" class="form-control" placeholder="Max"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-12">Measuring systems</label>
+				<div class="col-sm-12">
+					<form:checkboxes items="${measuringSystems}" path="systemIds" itemLabel="name" itemValue="id"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-12">Ingredients</label>
+				<div class="col-sm-12">
+					<form:checkboxes items="${ingredients}" path="ingredientIds" itemLabel="name" itemValue="id"/>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Ok</button>
+		</form:form>
+	</div>
 	<div class="col-md-7 col-xs-12">
 		<div class="row">
 			<div class="col-md-12 col-xs-12">
