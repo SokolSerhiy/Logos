@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ua.dto.filter.SimpleFilter;
 import ua.entity.Ingredient;
 import ua.repository.IngredientRepository;
+import ua.service.FileWriter;
+import ua.service.FileWriter.Folder;
 import ua.service.IngredientService;
 import ua.specification.IngredientSpecification;
 
@@ -18,6 +21,9 @@ public class IngredientServiceImpl implements IngredientService{
 
 	@Autowired
 	private IngredientRepository ingredientRepository;
+	
+	@Autowired
+	private FileWriter fileWriter;
 	
 	@Override
 	public Ingredient findOne(Long id) {
@@ -31,7 +37,12 @@ public class IngredientServiceImpl implements IngredientService{
 
 	@Override
 	public void save(Ingredient entity) {
-		ingredientRepository.save(entity);
+		MultipartFile file = entity.getFile();
+		entity = ingredientRepository.saveAndFlush(entity);
+		if(fileWriter.write(Folder.INGREDIENT, file, entity.getId())){
+			entity.setVersion(entity.getVersion()+1);
+			ingredientRepository.save(entity);
+		}
 	}
 
 	@Override
