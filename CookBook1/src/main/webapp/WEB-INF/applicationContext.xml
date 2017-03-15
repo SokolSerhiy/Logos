@@ -75,4 +75,5 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
+	<import resource="security.xml"/>
 </beans>

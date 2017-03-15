@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd">
+	<http use-expressions="true">
+		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
+		<form-login  login-page="/login" login-processing-url="/login" username-parameter="login" authentication-failure-url="/login?fail=true" authentication-success-handler-ref="authenticationSuccessHandler"/>
+		<logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID" invalidate-session="true"/>
+		<session-management session-fixation-protection="changeSessionId" invalid-session-url="/" >
+			<concurrency-control expired-url="/login?expired=true" max-sessions="1"/>
+		</session-management>
+		<remember-me key="myAppKey"  user-service-ref="userDetailsService"/>
+	</http>
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"/>
+<!-- 	<beans:bean id="userDetailsService" class="ua.service.implementation.UserServiceImpl"> -->
+<!-- 		<beans:property name="repository" ref="userRepository"/> -->
+<!-- 		<beans:property name="encoder" ref="encoder"/> -->
+<!-- 	</beans:bean> -->
+	
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+			<beans:constructor-arg name="strength" value="5" />
+		</beans:bean>
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="encoder"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

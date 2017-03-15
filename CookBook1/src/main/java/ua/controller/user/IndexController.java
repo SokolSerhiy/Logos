@@ -1,6 +1,9 @@
 package ua.controller.user;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +20,11 @@ public class IndexController {
 	private UserService userService;
 	
 	@GetMapping("/")
-	public String index(){
+	public String index(Principal principal){
+		if(principal!=null){
+			System.out.println(principal.getName());
+			SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
 		return "user-index";
 	}
 	
