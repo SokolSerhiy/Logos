@@ -16,3 +16,4 @@
 <a href="/login">Login</a>
 <a href="/registration">Registration</a>
 </sec:authorize>
+<a href="/human">People</a>

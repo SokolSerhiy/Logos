@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ua.entity.User;
 import ua.service.UserService;
@@ -44,4 +45,10 @@ public class IndexController {
 	public String login(){
 		return "user-login";
 	}
+	
+	@RequestMapping(value="/human")
+	public String people(){
+		return "user-people";
+	}
+	
 }

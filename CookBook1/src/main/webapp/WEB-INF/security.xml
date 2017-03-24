@@ -6,6 +6,7 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 	<http use-expressions="true">
+		<access-denied-handler ref="heandler"/>
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 		<form-login  login-page="/login" login-processing-url="/login" username-parameter="login" authentication-failure-url="/login?fail=true" authentication-success-handler-ref="authenticationSuccessHandler"/>
@@ -15,6 +16,7 @@
 		</session-management>
 		<remember-me key="myAppKey"  user-service-ref="userDetailsService"/>
 	</http>
+	<beans:bean id="heandler" class="ua.service.implementation.CustomAccessDeniedHandler"/>
 	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"/>
 <!-- 	<beans:bean id="userDetailsService" class="ua.service.implementation.UserServiceImpl"> -->
 <!-- 		<beans:property name="repository" ref="userRepository"/> -->
