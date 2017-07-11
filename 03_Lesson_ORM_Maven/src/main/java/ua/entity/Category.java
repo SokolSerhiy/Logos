@@ -20,6 +20,7 @@ public class Category {
 	//для того що б стовпці мали назву як і в БД
 	@Column(name="_name")
 	private String name;
+	
 	public int getId() {
 		return id;
 	}

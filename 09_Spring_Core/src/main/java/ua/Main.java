@@ -16,7 +16,9 @@ public class Main {
 		//А оскільки бінів строрених по класу бард тільки 1
 		//тому отримуємо по класу і викликаємо метод барда
 		//що б перевірити чи встановилась балада
-		context.getBean(Bard.class).singing();
+		
+		Bard bard = context.getBean(Bard.class);
+		bard.singing();
 		//закриваємо контейнер і знищуємо усі біни
 		context.close();
 	}
