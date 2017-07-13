@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Index</title>
+		<title>Registration</title>
 	</head>
 	<body>
 		<form action="/register" method="post">
