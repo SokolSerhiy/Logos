@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<title>Rent type</title>
+<title>Street</title>
 <style type="text/css">
 	.form-horizontal .control-label{
 		text-align: left;
@@ -14,10 +14,21 @@
 </style>
 </head>
 <body>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="/admin/street">Street</a></li>
+						<li><a href="/admin/renttype">Rent type</a></li>
+						<li><a href="/admin/area">Area</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<form class="form-horizontal" action="/admin/renttype" method="POST">
+				<form class="form-horizontal" action="/admin/street" method="POST">
 					<div class="form-group">
 						<label for="name" class="control-label col-sm-2">Name:</label>
 						<div class="col-sm-10">
@@ -34,17 +45,17 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table table-bordered">
+				<table width="100%" class="table table-bordered">
 					<tr>
 						<th>Name</th>
 						<th class="text-center">Update</th>
 						<th class="text-center">Delete</th>
 					</tr>
-					<c:forEach var="rentType" items="${rentTypes}">
+					<c:forEach var="street" items="${streets}">
 						<tr>
-							<td>${rentType.name}</td>
-							<td class="text-center"><a href="/admin/renttype/update/${rentType.id}" class="btn btn-warning">Update</a></td>
-							<td class="text-center"><a href="/admin/renttype/delete/${rentType.id}" class="btn btn-danger">Delete</a></td>
+							<td>${street.name}</td>
+							<td class="text-center"><a href="/admin/street/update/${street.id}" class="btn btn-warning">Update</a></td>
+							<td class="text-center"><a href="/admin/street/delete/${street.id}" class="btn btn-danger">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</table>

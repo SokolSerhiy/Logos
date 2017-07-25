@@ -4,15 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Admin</title>
+<title>Welcome</title>
 </head>
 <body>
-	<h2>Admin</h2>
+	<h2>Welcome</h2>
 	<div>
-		<a href="/">Home</a>
-		<a href="/admin/area">Area</a>
-		<a href="/admin/street">Street</a>
-		<a href="/admin/renttype">Rent type</a>
+		<a href="/admin">Admin</a>
+		<a href="/apartment">Apartments</a>
 	</div>
 </body>
 </html>
