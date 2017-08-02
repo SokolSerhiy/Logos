@@ -24,5 +24,4 @@ public class UniqueAreaValidator implements ConstraintValidator<UniqueArea, Stri
 	public boolean isValid(String name, ConstraintValidatorContext context) {
 		return repository.findByName(name) == null;
 	}
-
 }

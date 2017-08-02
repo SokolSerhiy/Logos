@@ -1,7 +1,10 @@
 package ua.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +36,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/registration")
-	public String save(@ModelAttribute("user") RegistrationRequest request, SessionStatus status){
+	public String save(@ModelAttribute("user") @Valid RegistrationRequest request, BindingResult br, SessionStatus status){
+		if(br.hasErrors()){
+			return "registration";
+		}
 		service.save(request);
 		status.setComplete();
 		return "redirect:/login";

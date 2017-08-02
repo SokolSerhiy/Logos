@@ -43,6 +43,7 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2"><form:errors path="checkPassword"/></div>
 						<label for="passwordRepeat" class="control-label col-sm-2">Password repeat:</label>
 						<div class="col-sm-10">
 							<form:password path="passwordRepeat" id="passwordRepeat" class="form-control" />

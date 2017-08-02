@@ -1,5 +1,7 @@
 package ua.domain.request;
 
+import javax.validation.constraints.AssertTrue;
+
 public class RegistrationRequest {
 
 	private String fullName;
@@ -13,6 +15,12 @@ public class RegistrationRequest {
 	private String passwordRepeat;
 	
 	private boolean isOwner;
+	
+	@AssertTrue(message="Not equal")
+	public boolean getCheckPassword(){
+		if(password==null) return false;
+		return password.equals(passwordRepeat);
+	}
 	
 	public boolean getIsOwner() {
 		return isOwner;
