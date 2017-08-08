@@ -173,6 +173,7 @@ public class PageableTag extends SimpleTagSupport{
 		last = page.getTotalPages();
 		current = page.getNumber()+1;
 		size = page.getSize();
+		System.out.println("current="+current+" last="+last+" size="+size);
 	}
 	/**
 	 * <ul class=pagination></ul>*/

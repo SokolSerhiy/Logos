@@ -3,6 +3,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="custom"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,13 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 <title>Welcome</title>
 </head>
 <body>
@@ -29,6 +37,63 @@
 					<button class="btn btn-danger">Sign out</button>
 				</form:form>
 			</sec:authorize>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<form:form modelAttribute="filter" class="form-horizontal" method="GET">
+					<custom:hiddenInputs excludeParams="min, max, rentType, _areas, areas, street, minRate"/>
+					<div class="col-sm-6">
+						<form:input path="min" placeholder="Min" class="form-control"/>
+					</div>
+					<div class="col-sm-6">
+						<form:input path="max" placeholder="Max" class="form-control"/>
+					</div>
+					<div class="col-sm-12">
+						<form:radiobuttons path="rentType" items="${rentTypes}"/>
+					</div>
+					<div class="col-sm-12">
+						<form:checkboxes items="${areas}" path="areas"/>
+					</div>
+					<div class="col-sm-6">
+						<form:input path="street" class="form-control" placeholder="Street"/>
+					</div>
+					<div class="col-sm-6">
+						<form:input path="minRate" class="form-control" placeholder="Min rate"/>
+					</div>
+					<div class="col-sm-12">
+						<button class="btn btn-success">Search</button>
+					</div>
+				</form:form>
+			</div>
+			<div class="col-sm-2">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button"
+								data-toggle="dropdown">
+								Sort <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<custom:sort innerHtml="Rate asc" paramValue="rate" />
+								<custom:sort innerHtml="Rate desc" paramValue="rate,desc" />
+								<custom:sort innerHtml="Street asc" paramValue="street.name" />
+								<custom:sort innerHtml="Street desc" paramValue="street.name,desc" />
+								<custom:sort innerHtml="Rooms asc" paramValue="rooms" />
+								<custom:sort innerHtml="Rooms desc" paramValue="rooms,desc" />
+								<custom:sort innerHtml="Price asc" paramValue="price" />
+								<custom:sort innerHtml="Price desc" paramValue="price,desc" />
+							</ul>
+						</div>
+					</div>
+				</div>
+				<c:if test="${page ne null}">
+					<div class="row">
+						<div class="col-xs-12">
+							<custom:size posibleSizes="1,2,5,10" size="${page.size}" />
+						</div>
+					</div>
+				</c:if>
+			</div>
 		</div>
 		<div class="row">
 				<div class="col-sm-12">
@@ -52,6 +117,14 @@
 					</table>
 				</div>
 			</div>
+		<c:if test="${page ne null}">
+			<div class="row">
+				<div class="col-md-12 col-xs-12 text-center">
+					<custom:pageable page="${page}" cell="<li></li>"
+						container="<ul class='pagination'></ul>" />
+				</div>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

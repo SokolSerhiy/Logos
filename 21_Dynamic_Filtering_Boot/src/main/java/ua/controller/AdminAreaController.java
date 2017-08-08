@@ -48,6 +48,7 @@ public class AdminAreaController {
 	@GetMapping
 	public String show(Model model, @PageableDefault Pageable pageable, @ModelAttribute("filter") SimpleFilter filter){
 		model.addAttribute("areas", service.findAll(pageable, filter));
+		System.out.println(pageable);
 		return "area";
 	}
 	

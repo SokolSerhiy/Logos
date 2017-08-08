@@ -85,9 +85,9 @@
 						<tr>
 							<td>${area.name}</td>
 							<td class="text-center"><a
-								href="/admin/area/update/${area.id}" class="btn btn-warning">Update</a></td>
+								href="/admin/area/update/${area.id}<custom:allParams/>" class="btn btn-warning">Update</a></td>
 							<td class="text-center"><a
-								href="/admin/area/delete/${area.id}" class="btn btn-danger">Delete</a></td>
+								href="/admin/area/delete/${area.id}<custom:allParams/>" class="btn btn-danger">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -10,9 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ua.domain.filter.ApartmentFilter;
 import ua.domain.request.ApartmentRequest;
 import ua.domain.view.ApartmentIndex;
 import ua.entity.Apartment;
+import ua.repository.ApartmentIndexRepository;
 import ua.repository.ApartmentRepository;
 import ua.service.ApartmentService;
 
@@ -21,10 +23,13 @@ public class ApartmentServiceImpl extends CrudServiceImpl<Apartment, Integer> im
 
 	private final ApartmentRepository repository;
 	
+	private final ApartmentIndexRepository executor;
+	
 	@Autowired
-	public ApartmentServiceImpl(ApartmentRepository repository) {
+	public ApartmentServiceImpl(ApartmentRepository repository,  ApartmentIndexRepository executor) {
 		super(repository);
 		this.repository = repository;
+		this.executor = executor;
 	}
 
 //	@Override
@@ -60,5 +65,10 @@ public class ApartmentServiceImpl extends CrudServiceImpl<Apartment, Integer> im
 	@Override
 	public List<ApartmentIndex> findTop5ByRate() {
 		return repository.findTop5ByRate(new PageRequest(0, 5));
+	}
+
+	@Override
+	public Page<ApartmentIndex> findByFilter(ApartmentFilter filter, Pageable pageable) {
+		return executor.findAllApartmentIndex(filter, pageable);
 	}
 }
