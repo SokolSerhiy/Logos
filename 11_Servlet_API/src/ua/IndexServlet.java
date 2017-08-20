@@ -27,4 +27,6 @@ public class IndexServlet extends HttpServlet{
 		//для побудови представлення викликаємо index.jsp
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
+	
+	
 }
